@@ -5,10 +5,25 @@ export const ProductContext = createContext();
 
 const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState(productData);
+  const [carts, setCarts] = useState([]);
 
+  const addToCart = (id) => {
+    const productToAdd = products.find((pro) => pro.id == id);
+    const checkIfAlreadyExist = carts.find((cart) => cart.id == id);
+    if (checkIfAlreadyExist == undefined) {
+      setCarts([...carts, { ...productToAdd, quantity: 1 }]);
+    } else {
+      setCarts(
+        carts.map((pro) =>
+          pro.id == id ? { ...pro, quantity: pro.quantity + 1 } : pro
+        )
+      );
+    }
+  };
+  
   return (
     <>
-      <ProductContext.Provider value={{ products }}>
+      <ProductContext.Provider value={{ products, addToCart }}>
         {children}
       </ProductContext.Provider>
     </>

@@ -23,7 +23,7 @@ const ProductProvider = ({ children }) => {
   
   return (
     <>
-      <ProductContext.Provider value={{ products, addToCart }}>
+      <ProductContext.Provider value={{ products, addToCart, carts, setCarts }}>
         {children}
       </ProductContext.Provider>
     </>

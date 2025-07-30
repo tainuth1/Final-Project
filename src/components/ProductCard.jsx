@@ -26,9 +26,9 @@ const ProductCard = ({ product }) => {
         <span className="text-black">(356)</span>
       </div>
       <div className="flex items-center justify-between">
-        <h3 className="text-2xl my-2 font-semibold text-yellow-600">$399.99</h3>
+        <h3 className="text-2xl my-2 font-semibold text-yellow-600">${product.price}</h3>
         <span className="text-xs bg-slate-200 py-1 px-2 rounded-sm">
-          Electronics
+          {product.category}
         </span>
       </div>
       <button 

@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../contexts/ProductProvider";
 
 const Navbar = () => {
   const { carts, setCarts } = useContext(ProductContext);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [total, setTotal] = useState(0);
 
   const increase = (id) => {
     setCarts(
@@ -24,6 +25,14 @@ const Navbar = () => {
       })
     );
   };
+
+  useEffect(() => {
+    let totalAmount = 0;
+    carts.forEach((pro) => {
+      totalAmount += pro.quantity * pro.price;
+    });
+    setTotal(totalAmount);
+  });
 
   const removeCart = (id) => {
     setCarts(carts.filter((cart) => cart.id != id));
@@ -84,7 +93,10 @@ const Navbar = () => {
                       <h3 className="text-xl font-semibold">
                         ${(product.price * product.quantity).toFixed(2)}
                       </h3>
-                      <button onClick={()=> removeCart(product.id)} className="text-red-500">
+                      <button
+                        onClick={() => removeCart(product.id)}
+                        className="text-red-500"
+                      >
                         <i class="bx bx-trash text-xl"></i>
                       </button>
                     </div>
@@ -92,8 +104,11 @@ const Navbar = () => {
                 ))}
               </div>
               <div className="mt-5 border-t py-3">
-                <h1 className="text-2xl font-bold">Total: $9999.99</h1>
-                <button className="mt-2 w-full bg-gray-900 py-2 text-white rounded-md">
+                <h1 className="text-2xl font-bold">Total: ${total.toFixed(2)}</h1>
+                <button
+                  onClick={() => setCarts([])}
+                  className="mt-2 w-full bg-gray-900 py-2 text-white rounded-md"
+                >
                   Checkout
                 </button>
               </div>
